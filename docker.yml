@@ -1,0 +1,45 @@
+# ------------------- Stage 1: Build Stage ------------------------------
+<<<<<<< HEAD
+FROM node:21 AS frontend-builder
+=======
+FROM node:22 AS frontend-builder
+>>>>>>> e6e9155a1be641f35f1ed3b0a8d80122fd88a1f7
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the package.json and package-lock.json for dependency installation
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# ------------------- Stage 2: Final Stage ------------------------------
+<<<<<<< HEAD
+FROM node:21-slim
+=======
+FROM node:22-slim
+>>>>>>> e6e9155a1be641f35f1ed3b0a8d80122fd88a1f7
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy built assets and dependencies from frontend-builder stage
+COPY --from=frontend-builder /app .
+
+# Copy the .env.sample file to .env.local
+COPY .env.docker .env.local
+
+# Expose port 5173 for the Node.js application
+EXPOSE 5173
+
+# Define the default command to run the application in development mode
+CMD ["npm", "run", "dev", "--", "--host"]
+<<<<<<< HEAD
+
+=======
+>>>>>>> e6e9155a1be641f35f1ed3b0a8d80122fd88a1f7
+
